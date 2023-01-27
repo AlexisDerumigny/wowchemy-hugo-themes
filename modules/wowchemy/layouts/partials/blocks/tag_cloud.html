@@ -13,7 +13,7 @@
 {{ if eq $items_count 0 }}
   {{ $items_count = 65535 }}
 {{ else }}
-  {{ $items_count = $items_count | default 20 }}
+  {{ $items_count = $items_count | default 50 }}
 {{ end }}
 
 {{/* Query */}}
@@ -38,7 +38,7 @@
       {{ range $name, $term := (sort $tags ".Page.Title" "asc") }}
         {{ $tagCount := len $term.Pages }}
         {{ $weight := div (sub (math.Log $tagCount) (math.Log $min)) (sub (math.Log $max) (math.Log $min)) }}
-        {{ $fontSize := add $fontSmall (mul (sub $fontBig $fontSmall) $weight) }}
+        {{ $fontSize := sub (add $fontSmall (mul (sub $fontBig $fontSmall) (mul $weight 0.5) ) ) 0 }}
         <a href="{{ .Page.RelPermalink }}" style="font-size:{{ $fontSize }}rem">{{ .Page.Title }}</a>
       {{ end }}
     </div>
