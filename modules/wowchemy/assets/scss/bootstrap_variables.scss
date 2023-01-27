@@ -4,13 +4,28 @@
 $primary: $sta-primary;
 $text-muted: rgba(0, 0, 0, 0.54);
 
+// Container minimum widths
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xla: 1500px,
+  xlb: 1700px,
+  xlc: 1900px
+) !default;
+
 // Container widths
 $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  // wider default: 1140 -> 1290
-  xl: 1290px,
+  // wider default: 1140 -> 1500
+  xl: 1140px,
+  xla: 1400px,
+  xlb: 1600px,
+  xlc: 1800px
 );
 $navbar-toggler-padding-x: 0;
 $navbar-toggler-font-size: 18px;
