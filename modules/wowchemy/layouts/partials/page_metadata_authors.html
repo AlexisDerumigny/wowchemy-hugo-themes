@@ -12,7 +12,15 @@
       {{- if .RelPermalink -}}
         <a href="{{.RelPermalink}}">{{.LinkTitle}}</a>
       {{- else -}}
-        {{ .LinkTitle }}
+        {{- if (isset $.Params "author_links") | and (not $highlight_name) -}}
+		  <a href="
+		  {{- with (index $.Params.author_links $index) -}}
+		    {{.}}
+		  {{- end -}}
+		  ">{{.LinkTitle}}</a>
+		{{- else -}}
+          {{ .LinkTitle }}
+		{{- end -}}
       {{- end -}}
     </span>
     {{- if isset $.Params "author_notes" -}}
