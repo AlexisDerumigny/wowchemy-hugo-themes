@@ -17,8 +17,37 @@ let filterValues;
 // Publication container.
 let $grid_pubs = $('#container-publications');
 
+// Function to update the numbering of items
+function updateNumberingItems() {
+	
+ 	let index_item_visible = 1;
+	
+	let hasRegex = (searchRegex != "undefined");
+	let hasFilterValues = (filterValues != "*");
+			
+	for (let i_item = 0; i_item < $grid_pubs[0].childElementCount; i_item++) {
+		// console.log($grid_pubs[0].children[i_item]);
+		// console.log(filterValues);
+		// console.log($grid_pubs[0].children[i_item].is(filterValues));
+		
+		//console.log($(document.getElementById('container-publications')).text());
+		
+		var $this_element_i = document.getElementById('container-publications').children[i_item];
+		
+		let searchResults = hasRegex        ? $($this_element_i).text().match(searchRegex) : true;
+		let filterResults = hasFilterValues ? $($this_element_i).is(filterValues)          : true;
+		
+		if (searchResults && filterResults){
+			
+			$($this_element_i.children[0].children[0]).text(index_item_visible);
+			index_item_visible ++;
+		}
+	}
+}
+
 // Initialise Isotope publication layout if required.
 if ($grid_pubs.length) {
+  //var $grid_pub_iso = 
   $grid_pubs.isotope({
     itemSelector: '.isotope-item',
     percentPosition: true,
@@ -34,23 +63,24 @@ if ($grid_pubs.length) {
     },
   });
   
-  // After arranging the elements, the index are re-numembered
-  // in the filtered list.
-  $grid_pub_iso.on( 'arrangeComplete', function( event, filteredItems ) {
-	  let index_item_visible = 1;
-	  for (let i_item = 0; i_item < this.childElementCount; i_item++) {
-		if (this.children[i_item].style.display != "none"){
-		  this.children[i_item].children[0].children[0].textContent = index_item_visible;
-		  index_item_visible ++;
-		}
-	  }
-	}
-  );
+  // // After arranging the elements, the index are re-numembered
+  // // in the filtered list.
+  // $grid_pub_iso.on( 'arrangeComplete', function( event, filteredItems ) {
+	  // let index_item_visible = 1;
+	  // for (let i_item = 0; i_item < this.childElementCount; i_item++) {
+		// if (this.children[i_item].style.display != "none"){
+		  // this.children[i_item].children[0].children[0].textContent = index_item_visible;
+		  // index_item_visible ++;
+		// }
+	  // }
+	// }
+  // );
 
   // Filter by search term.
   let $quickSearch = $('.filter-search').keyup(
     debounce(function () {
       searchRegex = new RegExp($quickSearch.val(), 'gi');
+      updateNumberingItems();
       $grid_pubs.isotope();
     }),
   );
@@ -66,7 +96,7 @@ if ($grid_pubs.length) {
 
     // Combine filters.
     filterValues = concatValues(pubFilters);
-
+	updateNumberingItems();
     // Activate filters.
     $grid_pubs.isotope();
 
@@ -128,6 +158,7 @@ function filter_publications() {
   filterValues = concatValues(pubFilters);
 
   // Activate filters.
+  updateNumberingItems();
   $grid_pubs.isotope();
 
   // Set selected option.
