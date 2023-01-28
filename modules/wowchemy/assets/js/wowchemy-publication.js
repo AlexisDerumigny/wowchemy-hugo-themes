@@ -33,6 +33,19 @@ if ($grid_pubs.length) {
       return searchResults && filterResults;
     },
   });
+  
+  // After arranging the elements, the index are re-numembered
+  // in the filtered list.
+  $grid_pub_iso.on( 'arrangeComplete', function( event, filteredItems ) {
+	  let index_item_visible = 1;
+	  for (let i_item = 0; i_item < this.childElementCount; i_item++) {
+		if (this.children[i_item].style.display != "none"){
+		  this.children[i_item].children[0].children[0].textContent = index_item_visible;
+		  index_item_visible ++;
+		}
+	  }
+	}
+  );
 
   // Filter by search term.
   let $quickSearch = $('.filter-search').keyup(
