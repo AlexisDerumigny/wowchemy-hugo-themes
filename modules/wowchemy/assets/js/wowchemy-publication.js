@@ -37,6 +37,39 @@ function updateNumberingItems() {
 	}
 }
 
+// Function to update the numbering of items
+function updateNumberingItemsReverse() {
+	
+ 	let index_item_visible = 0;
+	
+	for (let i_item = 0; i_item < $grid_pubs[0].childElementCount; i_item++) {
+		
+		let $this_element_i = document.getElementById('container-publications').children[i_item];
+		
+		let searchResults = searchRegex  ? $($this_element_i).text().match(searchRegex) : true;
+		let filterResults = filterValues ? $($this_element_i).is(filterValues)          : true;
+		
+		index_item_visible += (searchResults && filterResults);
+	}
+	let total_number_visible_index = index_item_visible;
+	
+ 	index_item_visible = 1;
+	
+	for (let i_item = 0; i_item < $grid_pubs[0].childElementCount; i_item++) {
+		
+		let $this_element_i = document.getElementById('container-publications').children[i_item];
+		
+		let searchResults = searchRegex  ? $($this_element_i).text().match(searchRegex) : true;
+		let filterResults = filterValues ? $($this_element_i).is(filterValues)          : true;
+		
+		if (searchResults && filterResults){
+			
+			$($this_element_i.children[0].children[0]).text(total_number_visible_index - index_item_visible + 1);
+			index_item_visible ++;
+		}
+	}
+}
+
 // Initialise Isotope publication layout if required.
 if ($grid_pubs.length) {
   //var $grid_pub_iso = 
