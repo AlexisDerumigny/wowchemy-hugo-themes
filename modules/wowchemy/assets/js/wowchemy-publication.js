@@ -22,20 +22,12 @@ function updateNumberingItems() {
 	
  	let index_item_visible = 1;
 	
-	let hasRegex = (searchRegex != "undefined");
-	let hasFilterValues = (filterValues != "*");
-			
 	for (let i_item = 0; i_item < $grid_pubs[0].childElementCount; i_item++) {
-		// console.log($grid_pubs[0].children[i_item]);
-		// console.log(filterValues);
-		// console.log($grid_pubs[0].children[i_item].is(filterValues));
 		
-		//console.log($(document.getElementById('container-publications')).text());
+		let $this_element_i = document.getElementById('container-publications').children[i_item];
 		
-		var $this_element_i = document.getElementById('container-publications').children[i_item];
-		
-		let searchResults = hasRegex        ? $($this_element_i).text().match(searchRegex) : true;
-		let filterResults = hasFilterValues ? $($this_element_i).is(filterValues)          : true;
+		let searchResults = searchRegex  ? $($this_element_i).text().match(searchRegex) : true;
+		let filterResults = filterValues ? $($this_element_i).is(filterValues)          : true;
 		
 		if (searchResults && filterResults){
 			
