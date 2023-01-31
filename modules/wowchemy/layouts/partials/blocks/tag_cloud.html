@@ -35,7 +35,12 @@
     {{ $fontStep := div $fontDelta $delta }}
 
     <div class="tag-cloud">
-      {{ range $name, $term := (sort $tags ".Page.Title" "asc") }}
+	  {{/* adding a space at the end of the name of each tag to force the result to be a string */}}
+	  {{ range $name, $term := (sort $tags ".Page.Title" "asc") }}
+	    {{ $term = printf "%s " $term }}
+	  {{ end }}
+	  
+	  {{ range $name, $term := (sort $tags ".Page.Title" "asc") }}
         {{ $tagCount := len $term.Pages }}
         {{ $weight := div (sub (math.Log $tagCount) (math.Log $min)) (sub (math.Log $max) (math.Log $min)) }}
         {{ $fontSize := sub (add $fontSmall (mul (sub $fontBig $fontSmall) (mul $weight 0.5) ) ) 0 }}
