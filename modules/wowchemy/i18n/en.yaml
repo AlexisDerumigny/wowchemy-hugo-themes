@@ -201,6 +201,9 @@
 - id: pub_patent
   translation: Patent
 
+- id: pub_workingpaper
+  translation: Working paper
+
 # Project details
 
 - id: open_project_site
