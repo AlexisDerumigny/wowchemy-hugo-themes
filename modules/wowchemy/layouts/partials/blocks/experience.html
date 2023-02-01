@@ -7,8 +7,32 @@
 {{ $block := .wcBlock }}
 {{ $columns := $block.design.columns | default "1" }}
 
+<style>
+.aaacollapse {
+  color: black;
+}
+
+.aaacollapse:focus {
+  color: black;
+}
+.aaacollapse.collapsed {
+  color: black;
+}
+.aaacollapse:after {
+  content: '\2212'; /* Unicode character for "plus" sign (+) */
+  margin-left: 15px;
+  font-size: 30px;
+}
+.aaacollapse.collapsed:after {
+  content: '\002B';
+  margin-left: 15px;
+  font-size: 30px;
+}
+</style>
+
 <!-- Experience widget -->
 <div class="col-12 {{if eq $columns "2"}}col-lg-8{{end}}">
+<div class="collapse" id="collapseExperience">
   {{ with $block.content.text }}{{ . | emojify | markdownify }}{{ end }}
 
   {{ if $block.content.items }}
@@ -77,4 +101,5 @@
   </div>
   {{end}}
   {{end}}
+</div>
 </div>
